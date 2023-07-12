@@ -1,10 +1,20 @@
-function createCard(name, description, pictureUrl) {
-    return `
+function createCard(name, description, pictureUrl, startDate, endDate, location) {
+  startDate = new Date(startDate);
+  endDate = new Date(endDate);
+
+  const formattedStartDate = `${startDate.getMonth() + 1}/${startDate.getDate()}/${startDate.getFullYear()}`;
+  const formattedEndDate = `${endDate.getMonth() + 1}/${endDate.getDate()}/${endDate.getFullYear()}`;
+
+  return `
       <div class="card shadow p-3 mb-5 bg-white rounded" >
         <img src="${pictureUrl}" class="card-img-top">
         <div class="card-body">
           <h5 class="card-name"> ${name}</h5>
+          <h6 class="card-subtitle mb2 text-muted">${location}</h6>
           <p class="card-text">${description}</p>
+        </div>
+        <div class="card-footer">
+        <p class="card-dates">${formattedStartDate} - ${formattedEndDate}</p>
         </div>
       </div>
     `;
@@ -31,7 +41,10 @@ function createCard(name, description, pictureUrl) {
             const name = details.conference.name;
             const description = details.conference.description;
             const pictureUrl = details.conference.location.picture_url;
-            const html = createCard(name, description, pictureUrl);
+            const startDate = details.conference.starts;
+            const endDate = details.conference.ends;
+            const location = details.conference.location.name;
+            const html = createCard(name, description, pictureUrl, startDate, endDate, location);
             const column = document.querySelector(`#col_${i%3}`);
             column.innerHTML += html;
             i++
