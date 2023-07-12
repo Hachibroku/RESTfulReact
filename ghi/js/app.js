@@ -24,11 +24,21 @@ function createCard(name, description, pictureUrl, startDate, endDate, location)
 
     const url = 'http://localhost:8000/api/conferences/';
 
+    const alertContainer = document.querySelector("#alert-container");
+    function showAlert(message) {
+      alertContainer.innerHTML = `
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      `;
+    }
+
     try {
       const response = await fetch(url);
 
       if (!response.ok) {
-        // Figure out what to do when the response is bad
+        showAlert("There was a problem fetching the conferences list.");
       } else {
         const data = await response.json();
 
@@ -54,7 +64,7 @@ function createCard(name, description, pictureUrl, startDate, endDate, location)
       }
     } catch (e) {
         console.error(e);
-      // Figure out what to do if an error is raised
+      showAlert("An unexpected error occurred.");
     }
 
   });
