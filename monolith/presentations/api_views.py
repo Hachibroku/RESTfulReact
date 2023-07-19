@@ -11,7 +11,7 @@ from .models import Presentation
 
 class PresentationListEncoder(ModelEncoder):
     model = Presentation
-    properties = ["title"]
+    properties = ["title", "id"]
 
     def get_extra_data(self, o):
         return {"status": o.status.name}
